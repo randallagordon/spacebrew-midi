@@ -1,0 +1,26 @@
+{
+  "name": "spacebrew-midi",
+  "version": "0.0.0",
+  "description": "Pipe MIDI events to Spacebrew",
+  "main": "lib/spacebrew-midi.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/randallagordon/spacebrew-midi"
+  },
+  "keywords": [
+    "Spacebrew",
+    "MIDI"
+  ],
+  "author": "Randall A. Gordon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/randallagordon/spacebrew-midi/issues"
+  },
+  "dependencies": {
+    "spacebrew.js": "git://github.com/randallagordon/spacebrew.js#master",
+    "midi": "~0.7.0"
+  }
+}
