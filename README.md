@@ -2,15 +2,21 @@
 
 Pipe MIDI events to Spacebrew
 
-HERE BE DRAGONS!
+*Warning: HERE BE DRAGONS!*
 
 ### Example ###################################################################
 
     var sbmidi = require('spacebrew-midi');
 
+    // Connect to Spacebrew
     sbmidi.connect();
 
-    sbmidi.doSomeStuff();
+    // Open the "last" port, usually the most recently connected MIDI device
+    sbmidi.openLastPort();
+
+    // One octave to either side of Middle C
+    sbmidi.addRange( 48, 72 );
+
 
 By default this will create a connection to the public [Spacebrew
 Admin](http://spacebrew.github.com/spacebrew/admin/admin.html?server=sandbox.spacebrew.cc)
@@ -20,7 +26,8 @@ To connect to another server: `sbmidi.connect({ server: 'http://localhost/' })`
 
 ### TODO ######################################################################
 
-Pretty much everything.
+ * Support more MIDI messages than just note on/off
+ * Pass human-friendly note IDs to Spacebrew ("C-4" instead of "60")
 
 ## License ####################################################################
 
