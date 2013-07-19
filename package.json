@@ -1,6 +1,6 @@
 {
   "name": "spacebrew-midi",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Pipe MIDI events to Spacebrew",
   "main": "lib/spacebrew-midi.js",
   "scripts": {
