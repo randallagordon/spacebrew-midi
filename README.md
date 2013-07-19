@@ -17,6 +17,7 @@ Pipe MIDI events to Spacebrew
     // One octave to either side of Middle C
     sbmidi.addRange( 48, 72 );
 
+![Screenshot of Spacebrew Admin running example code](https://github.com/randallagordon/spacebrew-midi/raw/master/img/readme-example.png "Screenshot of Spacebrew Admin running example code")
 
 By default this will create a connection to the public [Spacebrew
 Admin](http://spacebrew.github.com/spacebrew/admin/admin.html?server=sandbox.spacebrew.cc)
