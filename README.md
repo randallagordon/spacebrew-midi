@@ -27,7 +27,7 @@ To connect to another server: `sbmidi.connect({ server: 'http://localhost/' })`
 ### TODO ######################################################################
 
  * Support more MIDI messages than just note on/off
- * Pass human-friendly note IDs to Spacebrew ("C-4" instead of "60")
+ * Use Spacebrew custom messages for sending complex CC messages
 
 ## License ####################################################################
 
