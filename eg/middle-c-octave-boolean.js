@@ -7,5 +7,5 @@ sbmidi.connect();
 sbmidi.openLastPort();
 
 // One octave starting with Middle C
-sbmidi.addRange( 60, 72 );
+sbmidi.addInputRange( 60, 72 );
 
