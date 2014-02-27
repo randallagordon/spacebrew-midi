@@ -1,0 +1,61 @@
+#!/usr/bin/env node
+"use strict";
+
+var sbmidi = require('../lib/spacebrew-midi'),
+    mappedPorts = {};
+
+
+// Hacky way to supress Spacebrew's console.log calls
+console.log = function () {};
+
+sbmidi.connect();
+
+(function runMenu() {
+  var menu = require("terminal-menu")({ width: 72 });
+  menu.reset();
+  menu.write("Spacebrew MIDI - Select a device to connect to Spacebrew\n");
+  menu.write("------------------------------------------------------------------------\n");
+
+  sbmidi.getInPorts().forEach(function (port) {
+    if (mappedPorts["INPUT" + port]) {
+      menu.write(" INPUT on " + port + " - Connected!\n");
+    } else {
+      menu.add(" INPUT on " + port);
+    }
+  });
+
+  sbmidi.getOutPorts().forEach(function (port) {
+    if (mappedPorts["OUTPUT" + port]) {
+      menu.write("OUTPUT on " + port + " - Connected!\n");
+    } else {
+      menu.add("OUTPUT on " + port);
+    }
+  });
+
+  menu.add("EXIT");
+
+  menu.on("select", function (label) {
+    var selection = label.trim().split(" on ");
+    menu.close();
+
+    switch (selection[0]) {
+    case "INPUT":
+      sbmidi.openInPort(sbmidi.getInPorts().indexOf(selection[1]));
+      sbmidi.addInputRange(0x24, 0x33);
+      break;
+    case "OUTPUT":
+      sbmidi.openOutPort(sbmidi.getInPorts().indexOf(selection[1]));
+      sbmidi.addOutputRange(0x00, 0x1F);
+      break;
+    case "EXIT":
+      process.exit();
+      break;
+    }
+
+    mappedPorts[selection[0] + selection[1]] = " - Connected!";
+
+    runMenu();
+  });
+
+  menu.createStream().pipe(process.stdout);
+})();

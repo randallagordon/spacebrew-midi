@@ -1,0 +1,85 @@
+.TH "SPACEBREW\-MIDI" "" "February 2014" "" ""
+.SH "NAME"
+\fBspacebrew-midi\fR
+.P
+Route MIDI events via Spacebrew
+.SH CLI Utility Usage
+.P
+The CLI utility is a quick and easy way to connect MIDI devices to the public Spacebrew admin interface\.
+.P
+.RS 2
+.EX
+$ npm i \-g spacebrew\-midi
+$ spacebrew\-midi
+
+Spacebrew MIDI \- Select a device to connect to Spacebrew                    
+  \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-  
+   INPUT on QUNEO:0                                                         
+   INPUT on MPK mini:0                                                      
+  OUTPUT on QUNEO:0 \- Connected!                                            
+  OUTPUT on MPK mini:0
+.EE
+.RE
+.SH Module Usage Example
+.P
+.RS 2
+.EX
+var sbmidi = require("spacebrew\-midi");
+
+// Connect to Spacebrew
+sbmidi\.connect();
+
+// Open the "last" port, usually the most recently connected MIDI device
+sbmidi\.openLastInPort();
+sbmidi\.openLastOutPort();
+
+// One octave to either side of Middle C
+sbmidi\.addInputRange( 48, 72 );
+
+// Similar for output!
+sbmidi\.addOuputRange( 48, 72 );
+.EE
+.RE
+.P
+And over in the Admin interface you\'ll see:
+.P
+Screenshot of Spacebrew Admin running example code \fIhttps://github\.com/randallagordon/spacebrew\-midi/raw/master/img/readme\-example\.png\fR
+.P
+By default this will create a connection to the public Spacebrew
+Admin \fIhttp://spacebrew\.github\.com/spacebrew/admin/admin\.html?server=sandbox\.spacebrew\.cc\fR
+interface\.
+.P
+To connect to another server: \fBsbmidi\.connect({ server: "http://localhost/" })\fR
+.P
+To use a different name and description: \fBsbmidi\.connect({ name: "Bob", description: "Bob\'s MIDI Controller" })\fR
+.SH CHANGELOG
+.SS v0\.1\.2
+.RS 0
+.IP \(bu 2
+Added CLI utility
+
+.RE
+.SS v0\.1\.1
+.RS 0
+.IP \(bu 2
+Added MIDI output support
+
+.RE
+.SH TODO
+.RS 0
+.IP \(bu 2
+Support more MIDI messages than just note on/off
+.IP \(bu 2
+Use Spacebrew custom messages for sending complex CC messages
+.IP \(bu 2
+Publish MIDI helper library separately
+.IP \(bu 2
+Add CLI option parsing for non\-interactive routing
+.IP \(bu 2
+Web interface to complement CLI for adding/editing routed messages
+
+.RE
+.SH LICENSE
+.P
+MIT
+

@@ -1,8 +1,12 @@
 {
   "name": "spacebrew-midi",
   "version": "0.1.1",
-  "description": "Pipe MIDI events to Spacebrew",
+  "description": "Route MIDI events via Spacebrew",
   "main": "lib/spacebrew-midi.js",
+  "bin": {
+    "spacebrew-midi": "bin/spacebrew-midi"
+  },
+  "man": "./doc/spacebrew-midi.1"
   "scripts": {
     "test": ""
   },
@@ -21,6 +25,7 @@
   },
   "dependencies": {
     "spacebrew.js": "git://github.com/randallagordon/spacebrew.js#master",
-    "midi": "~0.7.0"
+    "midi": "~0.7.0",
+    "terminal-menu": "~0.2.0"
   }
 }
