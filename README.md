@@ -6,6 +6,10 @@ Route MIDI events via Spacebrew
 
 The CLI utility is a quick and easy way to connect MIDI devices to the public Spacebrew admin interface.
 
+Input ports start listening for two Note On events in the background to use as lower and upper boundaries for the range. The UI doesn't currently indicate this is occuring—sorry, bad UX! I'll get that fixed in the next version.
+
+Output ports are currently connected for the entire C-0 through G-9 range.
+
 WARNING: Simultaneous connections of the same type (input or output) segfaults on some platforms. Looking into the root cause...
 
 ```sh
@@ -25,19 +29,20 @@ Spacebrew MIDI - Select a device to connect to Spacebrew
 ```js
 var sbmidi = require("spacebrew-midi");
 
-// Connect to Spacebrew
+// Connect to Spacebrew, passing an onOpen handler
 sbmidi.connect(function () {
 
   // Determine the last available port, usually the most recently connected device
   var portNumber = sbmidi.getInPortCount() - 1;
 
   // One octave to either side of Middle C
-  sbmidi.addInputRange( portNumber, 48, 72 );
+  sbmidi.addInputRange(portNumber, 48, 72);
 
   // Similar for output!
   sbmidi.addOuputRange(portNumber, 48, 72);
 
-  // Alternatively, just pass a port number and bounds will be "learned" based on the first two Note On events
+  // Alternatively, just pass a port number and bounds will be "learned"
+  // based on the next two Note On events received
   sbmidi.addInputRange(portNumber);
 
 });
@@ -61,7 +66,7 @@ To use a different name and description: `sbmidi.connect({ name: "Bob", descript
 
  * Added CLI utility
  * Added support for connecting multiple ports simultaneously (still has issues)
- * Added input range connection via "learning" from MIDI Note On events
+ * Added input range addition via "learning" from MIDI Note On events
 
 ### v0.1.1
 
@@ -70,11 +75,13 @@ To use a different name and description: `sbmidi.connect({ name: "Bob", descript
 ## TODO ######################################################################
 
  * Support more MIDI messages than just note on/off
- * Use Spacebrew custom messages for sending complex CC messages
+ * Use Spacebrew custom messages for sending complex CC messages (knobs, sliders, etc.)
  * Publish MIDI helper library separately
  * Add CLI option parsing for non-interactive routing
+ * JSON based config files to support building a device map library (think `spacebrew-midi --device QuNeo`)
  * Web interface to complement CLI for adding/editing routed messages
  * Handle closing things down (onClose handler to close MIDI ports, etc.)
+ * Refactor so a range can be added on an already open port
 
 ## LICENSE ####################################################################
 
