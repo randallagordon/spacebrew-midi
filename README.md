@@ -6,6 +6,8 @@ Route MIDI events via Spacebrew
 
 The CLI utility is a quick and easy way to connect MIDI devices to the public Spacebrew admin interface.
 
+WARNING: Simultaneous connections of the same type (input or output) segfaults on some platforms. Looking into the root cause...
+
 ```sh
 $ npm i -g spacebrew-midi
 $ spacebrew-midi
@@ -33,7 +35,10 @@ sbmidi.connect(function () {
   sbmidi.addInputRange( portNumber, 48, 72 );
 
   // Similar for output!
-  sbmidi.addOuputRange( portNumber, 48, 72 );
+  sbmidi.addOuputRange(portNumber, 48, 72);
+
+  // Alternatively, just pass a port number and bounds will be "learned" based on the first two Note On events
+  sbmidi.addInputRange(portNumber);
 
 });
 ```
@@ -56,6 +61,7 @@ To use a different name and description: `sbmidi.connect({ name: "Bob", descript
 
  * Added CLI utility
  * Added support for connecting multiple ports simultaneously (still has issues)
+ * Added input range connection via "learning" from MIDI Note On events
 
 ### v0.1.1
 

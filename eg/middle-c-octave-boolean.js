@@ -6,6 +6,6 @@ var sbmidi = require("../lib/spacebrew-midi");
 sbmidi.connect(function () {
 
   // On the last available port, add a one octave input range starting with Middle C
-  sbmidi.addInputRange( sbmidi.getInPortCount() - 1,  60, 72 );
+  sbmidi.addInputRange(sbmidi.getInPortCount() - 1,  60, 72);
 
 });

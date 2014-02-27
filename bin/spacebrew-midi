@@ -40,11 +40,11 @@ function runMenu() {
     switch (selection[0]) {
     case "INPUT":
       port = sbmidi.getInPorts().indexOf(selection[1]);
-      sbmidi.addInputRange(port, 0x24, 0x33);
+      sbmidi.addInputRange(port);
       break;
     case "OUTPUT":
       port = sbmidi.getOutPorts().indexOf(selection[1]);
-      sbmidi.addOutputRange(port, 0x0C, 0x1F);
+      sbmidi.addOutputRange(port, 0x0C, 0x7F);
       break;
     case "EXIT":
       process.exit();
