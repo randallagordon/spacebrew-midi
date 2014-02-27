@@ -24,17 +24,18 @@ Spacebrew MIDI - Select a device to connect to Spacebrew
 var sbmidi = require("spacebrew-midi");
 
 // Connect to Spacebrew
-sbmidi.connect();
+sbmidi.connect(function () {
 
-// Open the "last" port, usually the most recently connected MIDI device
-sbmidi.openLastInPort();
-sbmidi.openLastOutPort();
+  // Determine the last available port, usually the most recently connected device
+  var portNumber = sbmidi.getInPortCount() - 1;
 
-// One octave to either side of Middle C
-sbmidi.addInputRange( 48, 72 );
+  // One octave to either side of Middle C
+  sbmidi.addInputRange( portNumber, 48, 72 );
 
-// Similar for output!
-sbmidi.addOuputRange( 48, 72 );
+  // Similar for output!
+  sbmidi.addOuputRange( portNumber, 48, 72 );
+
+});
 ```
 
 And over in the Admin interface you'll see:
@@ -51,9 +52,10 @@ To use a different name and description: `sbmidi.connect({ name: "Bob", descript
 
 ## CHANGELOG ######################################################################
 
-### v0.1.2
+### v0.2.0
 
  * Added CLI utility
+ * Added support for connecting multiple ports simultaneously (still has issues)
 
 ### v0.1.1
 
@@ -66,6 +68,7 @@ To use a different name and description: `sbmidi.connect({ name: "Bob", descript
  * Publish MIDI helper library separately
  * Add CLI option parsing for non-interactive routing
  * Web interface to complement CLI for adding/editing routed messages
+ * Handle closing things down (onClose handler to close MIDI ports, etc.)
 
 ## LICENSE ####################################################################
 

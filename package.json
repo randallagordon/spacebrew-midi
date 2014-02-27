@@ -6,7 +6,7 @@
   "bin": {
     "spacebrew-midi": "bin/spacebrew-midi"
   },
-  "man": "./doc/spacebrew-midi.1"
+  "man": "./doc/spacebrew-midi.1",
   "scripts": {
     "test": ""
   },
@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "spacebrew.js": "git://github.com/randallagordon/spacebrew.js#master",
-    "midi": "~0.7.0",
+    "midi": "~0.8.1",
     "terminal-menu": "~0.2.0"
   }
 }
