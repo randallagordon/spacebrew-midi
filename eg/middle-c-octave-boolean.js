@@ -4,7 +4,7 @@ var sbmidi = require('../lib/spacebrew-midi');
 sbmidi.connect();
 
 // Open the "last" port, usually the most recently connected MIDI device
-sbmidi.openLastPort();
+sbmidi.openLastInPort();
 
 // One octave starting with Middle C
 sbmidi.addInputRange( 60, 72 );
