@@ -53,9 +53,11 @@ function runMenu() {
 
     mappedPorts[selection[0] + selection[1]] = true;
 
-    //runMenu();
-    console.log = log;
-    process.stdin.resume();
+    // If you get segfaults, comment out runMenu() and uncomment the following two lines
+    // Some platforms seem to have issues using multiple simultaneous ports of the same type
+    runMenu();
+    //console.log = log;
+    //process.stdin.resume();
   });
 
   menu.createStream().pipe(process.stdout);
