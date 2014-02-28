@@ -1,6 +1,6 @@
 {
   "name": "spacebrew-midi",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Route MIDI events via Spacebrew",
   "main": "lib/spacebrew-midi.js",
   "bin": {
