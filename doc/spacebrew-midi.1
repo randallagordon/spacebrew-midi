@@ -7,6 +7,12 @@ Route MIDI events via Spacebrew
 .P
 The CLI utility is a quick and easy way to connect MIDI devices to the public Spacebrew admin interface\.
 .P
+Input ports start listening for two Note On events in the background to use as lower and upper boundaries for the range\. The UI doesn\'t currently indicate this is occuring—sorry, bad UX! I\'ll get that fixed in the next version\.
+.P
+Output ports are currently connected for the entire C\-0 through G\-9 range\.
+.P
+WARNING: Simultaneous connections of the same type (input or output) segfaults on some platforms\. Looking into the root cause\.\.\.
+.P
 .RS 2
 .EX
 $ npm i \-g spacebrew\-midi
@@ -26,18 +32,23 @@ Spacebrew MIDI \- Select a device to connect to Spacebrew
 .EX
 var sbmidi = require("spacebrew\-midi");
 
-// Connect to Spacebrew
-sbmidi\.connect();
+// Connect to Spacebrew, passing an onOpen handler
+sbmidi\.connect(function () {
 
-// Open the "last" port, usually the most recently connected MIDI device
-sbmidi\.openLastInPort();
-sbmidi\.openLastOutPort();
+  // Determine the last available port, usually the most recently connected device
+  var portNumber = sbmidi\.getInPortCount() \- 1;
 
-// One octave to either side of Middle C
-sbmidi\.addInputRange( 48, 72 );
+  // One octave to either side of Middle C
+  sbmidi\.addInputRange(portNumber, 48, 72);
 
-// Similar for output!
-sbmidi\.addOuputRange( 48, 72 );
+  // Similar for output!
+  sbmidi\.addOuputRange(portNumber, 48, 72);
+
+  // Alternatively, just pass a port number and bounds will be "learned"
+  // based on the next two Note On events received
+  sbmidi\.addInputRange(portNumber);
+
+});
 .EE
 .RE
 .P
@@ -53,10 +64,14 @@ To connect to another server: \fBsbmidi\.connect({ server: "http://localhost/" }
 .P
 To use a different name and description: \fBsbmidi\.connect({ name: "Bob", description: "Bob\'s MIDI Controller" })\fR
 .SH CHANGELOG
-.SS v0\.1\.2
+.SS v0\.2\.0
 .RS 0
 .IP \(bu 2
 Added CLI utility
+.IP \(bu 2
+Added support for connecting multiple ports simultaneously (still has issues)
+.IP \(bu 2
+Added input range addition via "learning" from MIDI Note On events
 
 .RE
 .SS v0\.1\.1
@@ -70,13 +85,19 @@ Added MIDI output support
 .IP \(bu 2
 Support more MIDI messages than just note on/off
 .IP \(bu 2
-Use Spacebrew custom messages for sending complex CC messages
+Use Spacebrew custom messages for sending complex CC messages (knobs, sliders, etc\.)
 .IP \(bu 2
 Publish MIDI helper library separately
 .IP \(bu 2
 Add CLI option parsing for non\-interactive routing
 .IP \(bu 2
+JSON based config files to support building a device map library (think \fBspacebrew\-midi \-\-device QuNeo\fR)
+.IP \(bu 2
 Web interface to complement CLI for adding/editing routed messages
+.IP \(bu 2
+Handle closing things down (onClose handler to close MIDI ports, etc\.)
+.IP \(bu 2
+Refactor so a range can be added on an already open port
 
 .RE
 .SH LICENSE
