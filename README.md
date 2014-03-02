@@ -45,6 +45,10 @@ sbmidi.connect(function () {
   // based on the next two Note On events received
   sbmidi.addInputRange(portNumber);
 
+  // One octave to either side of Middle C in "latch" mode, which only listens
+  // for Note On messages when toggling the state published to Spacebrew
+  sbmidi.addInputRange(portNumber, 48, 72, "latch");
+
 });
 ```
 
@@ -61,6 +65,10 @@ To connect to another server: `sbmidi.connect({ server: "http://localhost/" })`
 To use a different name and description: `sbmidi.connect({ name: "Bob", description: "Bob's MIDI Controller" })`
 
 ## CHANGELOG ######################################################################
+
+### v0.2.1
+
+ * Addded ability to set modes on input ranges, implements "latch" mode
 
 ### v0.2.0
 
